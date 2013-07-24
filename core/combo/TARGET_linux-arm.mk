@@ -92,9 +92,16 @@ ifeq ($(ARCH_ARM_HAVE_THUMB_SUPPORT),true)
                             -O3 \
                             -fomit-frame-pointer \
                             -funsafe-math-optimizations \
-                            -fstrict-aliasing \
                             -Wstrict-aliasing=2 \
-                            -Werror=strict-aliasing
+                            -Werror=strict-aliasing \
+                            -Wno-unused-parameter \
+                            -Wno-unused-value \
+                            -Wno-unused-function \
+                            -fno-strict-aliasing
+
+## Removed for problems with camera and GCC 4.7
+#                            -fstrict-aliasing \
+
     endif
 else
     TARGET_thumb_CFLAGS := $(TARGET_arm_CFLAGS)
@@ -183,17 +190,21 @@ else
 TARGET_GLOBAL_CFLAGS += -mno-thumb-interwork
 endif
 
-TARGET_GLOBAL_CPPFLAGS += -fvisibility-inlines-hidden $(call cc-option,-std=gnu++11)
+TARGET_GLOBAL_CPPFLAGS += -fvisibility-inlines-hidden 
+## Pulled from the above line for now to resolve camera issues with GCC 4.7
+# $(call cc-option,-std=gnu++11)
 
 # More flags/options can be added here
 TARGET_RELEASE_CFLAGS := \
 			-DNDEBUG \
 			-g \
 			-Wstrict-aliasing=2 \
-			-Werror=strict-aliasing \
 			-fgcse-after-reload \
 			-frerun-cse-after-loop \
 			-frename-registers
+
+## Remove for now to resolve camera issues
+#<------><------><------>-Werror=strict-aliasing \
 
 libc_root := bionic/libc
 libm_root := bionic/libm
