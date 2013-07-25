@@ -190,9 +190,7 @@ else
 TARGET_GLOBAL_CFLAGS += -mno-thumb-interwork
 endif
 
-TARGET_GLOBAL_CPPFLAGS += -fvisibility-inlines-hidden 
-## Pulled from the above line for now to resolve camera issues with GCC 4.7
-# $(call cc-option,-std=gnu++11)
+TARGET_GLOBAL_CPPFLAGS += -fvisibility-inlines-hidden $(call cc-option,-std=gnu++11)
 
 # More flags/options can be added here
 TARGET_RELEASE_CFLAGS := \
